@@ -23,9 +23,9 @@ export class UserCollection {
         try {
             const db = getFirestore(config);
             const docRef = await addDoc(collection(db, 'users'), {
-                name: user.name,
-                email: user.email,
-                phone: user.phone
+                name: user.name ?? '',
+                email: user.email ?? '',
+                phone: user.phone ?? '',
             });
             user.id = docRef.id;
         } catch (err) {
@@ -38,9 +38,9 @@ export class UserCollection {
         try {
             const db = getFirestore(config);
             await updateDoc(doc(db, 'users', id), {
-                name: user.name,
-                email: user.email,
-                phone: user.phone
+                name: user.name ?? '',
+                email: user.email ?? '',
+                phone: user.phone ?? '',
             });
             return true;
         } catch (err) {

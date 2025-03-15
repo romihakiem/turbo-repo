@@ -44,6 +44,7 @@ class MainPage extends React.Component<any, any> {
   btnOpen(data: any) {
     if (data.isEdit) {
       this.setState(data);
+      this.props.actions.setAlert(null);
       this.props.actions.setModalOpen(true);
       return;
     }
@@ -152,7 +153,7 @@ class MainPage extends React.Component<any, any> {
         >
           <DialogTitle>Entry Contact</DialogTitle>
           <DialogContent>
-            {alert != null ? (
+            {alert != null && isModalOpen ? (
               <Alert severity={alert}>{message}</Alert>
             ) : <></>}
             <TextField type="text" margin="dense" label="Name *" fullWidth variant="standard"
