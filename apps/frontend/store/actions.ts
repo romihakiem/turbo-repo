@@ -8,7 +8,7 @@ export const fetchUsers = () => async (dispatch: any) => {
             payload: res.data,
         })
         return Promise.resolve(res)
-    } catch (err) {
+    } catch (err: any) {
         return Promise.reject(err)
     }
 }
@@ -19,14 +19,16 @@ export const createUser = (data: any) => async (dispatch: any) => {
         dispatch({
             type: "CREATE_USER",
             payload: data,
+            loading: true,
             alert: "success",
             message: res.data.message,
         })
         return Promise.resolve(res)
-    } catch (err) {
+    } catch (err: any) {
         dispatch({
             type: "CREATE_USER",
             payload: data,
+            loading: false,
             alert: "error",
             message: err.response.data.message,
         })
@@ -40,14 +42,16 @@ export const updateUser = (data: any, id: string) => async (dispatch: any) => {
         dispatch({
             type: "UPDATE_USER",
             payload: data,
+            loading: true,
             alert: "success",
             message: res.data.message,
         })
         return Promise.resolve(res)
-    } catch (err) {
+    } catch (err: any) {
         dispatch({
             type: "UPDATE_USER",
             payload: data,
+            loading: false,
             alert: "error",
             message: err.response.data.message,
         })
@@ -61,14 +65,16 @@ export const deleteUser = (id: string) => async (dispatch: any) => {
         dispatch({
             type: "DELETE_USER",
             payload: id,
+            loading: true,
             alert: "success",
             message: res.data.message,
         })
         return Promise.resolve(res)
-    } catch (err) {
+    } catch (err: any) {
         dispatch({
             type: "DELETE_USER",
             payload: id,
+            loading: false,
             alert: "error",
             message: err.response.data.message,
         })
@@ -96,7 +102,6 @@ export const setModalOpen = (isOpen: boolean) => {
         return {
             type: "MODAL_OPEN",
             payload: isOpen,
-            alert: null,
         }
     }
     return {
@@ -115,12 +120,12 @@ export const authRegister = (data: any) => async (dispatch: any) => {
             message: "Successfully registered",
         })
         return Promise.resolve(res)
-    } catch (err) {
+    } catch (err: any) {
         dispatch({
             type: "AUTH_REGISTER",
             payload: data,
             alert: "error",
-            message: err.response.data.message,
+            message: "Failed to register",
         })
         return Promise.reject(err)
     }
@@ -136,7 +141,7 @@ export const authLogin = (data: any) => async (dispatch: any) => {
             message: "Successfully logged in",
         })
         return Promise.resolve(res)
-    } catch (err) {
+    } catch (err: any) {
         dispatch({
             type: "AUTH_LOGIN",
             payload: data,

@@ -15,9 +15,9 @@ import Typography from '@mui/material/Typography';
 import AppTemplate from '@/components/templates/template';
 import * as Actions from '@/store/actions';
 
-class LoginPage extends React.Component {
-  constructor(props: {}, context: any) {
-    super(props, context);
+class LoginPage extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
 
     this.state = {};
 

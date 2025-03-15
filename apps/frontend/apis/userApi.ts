@@ -1,4 +1,5 @@
 import axios from "axios"
+import { User } from "@share/model/user";
 
 const http = axios.create({
     baseURL: "http://localhost:3100/api",
@@ -14,11 +15,11 @@ class UserApi {
         return http.get("/user")
     }
 
-    create(data: any) {
+    create(data: User) {
         return http.post("/user", data)
     }
 
-    update(data: any, id: string) {
+    update(data: User, id: string) {
         return http.post(`/user/${id}`, data)
     }
 
@@ -26,11 +27,11 @@ class UserApi {
         return http.delete(`/user/${id}`)
     }
 
-    register(data: any) {
+    register(data: User) {
         return http.post("/register", data)
     }
 
-    login(data: any) {
+    login(data: User) {
         return http.post("/login", data)
     }
 

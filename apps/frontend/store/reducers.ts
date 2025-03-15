@@ -6,6 +6,7 @@ const initialState = {
   selectedUser: {},
   alert: null,
   message: null,
+  isLoading: false,
   isModalOpen: false,
 }
 
@@ -15,6 +16,7 @@ const userReducer = (state = initialState, action: any) => {
       return {
         ...state,
         userList: action.payload,
+        isLoading: false,
       }
     case "CREATE_USER":
       return {
@@ -22,6 +24,7 @@ const userReducer = (state = initialState, action: any) => {
         userList: [action.payload, ...state.userList],
         alert: action.alert,
         message: action.message,
+        isLoading: action.loading,
       }
     case "UPDATE_USER":
       const updateUser = state.userList.map((user: any) => {
@@ -40,6 +43,7 @@ const userReducer = (state = initialState, action: any) => {
         userList: updateUser,
         alert: action.alert,
         message: action.message,
+        isLoading: action.loading,
       }
     case "DELETE_USER":
       const filterUser = state.userList.filter(
@@ -50,6 +54,7 @@ const userReducer = (state = initialState, action: any) => {
         userList: filterUser,
         alert: action.alert,
         message: action.message,
+        isLoading: action.loading,
       }
     case "SELECT_USER":
       const findUser = state.userList.find(
@@ -69,7 +74,6 @@ const userReducer = (state = initialState, action: any) => {
       return {
         ...state,
         isModalOpen: action.payload,
-        alert: action.alert,
       }
     case "AUTH_REGISTER":
       return {

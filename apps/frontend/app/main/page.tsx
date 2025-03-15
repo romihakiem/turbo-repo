@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Alert } from '@mui/material';
+import { Alert, LinearProgress } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -25,9 +25,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import AppTemplate from '@/components/templates/template';
 import * as Actions from '@/store/actions';
 
-class MainPage extends React.Component {
-  constructor(props: {}, context: any) {
-    super(props, context);
+class MainPage extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
 
     this.state = {};
 
@@ -41,7 +41,7 @@ class MainPage extends React.Component {
     this.props.actions.fetchUsers();
   }
 
-  btnOpen(data) {
+  btnOpen(data: any) {
     if (data.isEdit) {
       this.setState(data);
       this.props.actions.setModalOpen(true);
@@ -54,6 +54,7 @@ class MainPage extends React.Component {
       return;
     }
     this.setState({ id: '', name: '', email: '', phone: '' });
+    this.props.actions.setAlert(null);
     this.props.actions.setModalOpen(true);
   }
 
@@ -78,10 +79,11 @@ class MainPage extends React.Component {
   btnCancel = () => {
     this.props.actions.fetchUsers();
     this.props.actions.setModalOpen(false);
+    if (this.props.alert == 'error') this.props.actions.setAlert(null);
   }
 
   render() {
-    const { users, alert, message, isModalOpen } = this.props;
+    const { users, alert, message, isLoading, isModalOpen } = this.props;
 
     return (
       <AppTemplate {...this.props}>
@@ -99,9 +101,12 @@ class MainPage extends React.Component {
         </Grid>
         {alert != null && !isModalOpen ? (
           <Alert severity={alert}>{message}</Alert>
-        ) : <></>}
+        ) : null}
+        {isLoading ? (
+          <LinearProgress />
+        ) : null}
         <List>
-          {users.map((user, idx) => {
+          {users.map((user: any, idx: any) => {
             return (
               <ListItem
                 key={idx}
@@ -147,7 +152,7 @@ class MainPage extends React.Component {
         >
           <DialogTitle>Entry Contact</DialogTitle>
           <DialogContent>
-            {alert != null && isModalOpen ? (
+            {alert != null ? (
               <Alert severity={alert}>{message}</Alert>
             ) : <></>}
             <TextField type="text" margin="dense" label="Name *" fullWidth variant="standard"
@@ -175,6 +180,7 @@ const mapStateToProps = (state: any) => {
     users: state.user.userList,
     alert: state.user.alert,
     message: state.user.message,
+    isLoading: state.user.isLoading,
     isModalOpen: state.user.isModalOpen
   };
 };
